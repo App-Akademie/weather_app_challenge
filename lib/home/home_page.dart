@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/home/repositories/weather_repository.dart';
+import 'package:weather_app/gen/assets.gen.dart';
+import 'package:weather_app/home/widgets/weather_bottom_sheet.dart';
+import 'package:weather_app/home/widgets/weather_info.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -7,17 +9,33 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Weather App'),
+      extendBody: true,
+      body: Stack(
+        children: [
+          SizedBox.expand(
+            child: Assets.images.bg.image(),
+          ),
+          Positioned(
+            bottom: 190,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Assets.images.house.image(
+                width: 300,
+              ),
+            ),
+          ),
+          const Positioned(
+            top: 140,
+            left: 0,
+            right: 0,
+            child: WeatherInfo(
+              city: 'Stuttgart',
+            ),
+          ),
+        ],
       ),
-      body: Center(
-        child: FilledButton(
-          child: const Text('fetch weather'),
-          onPressed: () {
-            WeatherRepository().getWeather('Stuttgart');
-          },
-        ),
-      ),
+      bottomNavigationBar: const WeatherBottomSheet(),
     );
   }
 }
